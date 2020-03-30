@@ -10,15 +10,24 @@ const App = () => {
         {
             label: 'Попить кофе',
             important: false,
+            id: 1
         },
         {
             label: 'Разработать React приложение',
             important: true,
+            id: 2,
         },
         {
             label: 'Лечь спать',
             important: false,
+            id: 3,
         },
+        {
+            label: 'Сходить покакать',
+            important: true,
+            id: 4,
+        },
+
 
     ];
     return (
