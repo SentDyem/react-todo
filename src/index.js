@@ -23,7 +23,7 @@ const App = () => {
             id: 3,
         },
         {
-            label: 'Сходить покакать',
+            label: 'Сходить поесть',
             important: true,
             id: 4,
         },
