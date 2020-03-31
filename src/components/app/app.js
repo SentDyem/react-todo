@@ -8,6 +8,8 @@ import '../app/app.css';
 
 export default class App extends Component {
 
+maxId = 100;
+
 state = {
     todoItems: [
         {
@@ -46,7 +48,18 @@ deleteItem = (id) => {
     })
 };
 addItem = (text) => {
-    console.log(`Добавлено - ${text}`);
+    const newItem = {
+        label: text,
+        important: false,
+        id: this.maxId++
+    };
+
+    this.setState(({todoItems}) => {
+        const newArray = [...todoItems, newItem];
+        return {
+            todoItems: newArray
+        }
+    })
 };
 
 render() {
