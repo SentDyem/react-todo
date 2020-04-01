@@ -19,9 +19,9 @@ state = {
     ]
 };
 
-createTodoItem(label) {
+createTodoItem(text) {
     return {
-            label,
+            label: text,
             important: false,
             done: false,
             id: this.maxId++ 
@@ -53,14 +53,27 @@ onToggleImportant = (id) => {
 };
 
 onToggleDone = (id) => {
-    console.log('toggle done', id);
+    this.setState(( {todoItems} ) => {
+
+        const idx = todoItems.findIndex((el) => el.id === id);
+
+        const oldItem = todoItems[idx];
+        const newItem = { ...oldItem, done: !oldItem.done };
+        const newArray = [...todoItems.slice(0, idx), newItem, ...todoItems.slice(idx + 1)];
+        return {
+            todoItems: newArray
+        };
+
+    }) 
 };
 
 render() {
-    const {todoItems} = this.state;
+    const doneCount = this.state.todoItems.filter((el) => el.done).length;
+    const todoCount = this.state.todoItems.length - doneCount;
+    const { todoItems } = this.state;
     return (
         <div className = 'todo-app'>
-            <AppHeader toDo = {2} done = {4}/>
+            <AppHeader toDo = {todoCount} done = {doneCount}/>
             <div className = 'top-panel d-flex'>
             <SearchPanel />
             <ItemStatusFilter />
