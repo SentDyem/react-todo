@@ -12,29 +12,20 @@ maxId = 100;
 
 state = {
     todoItems: [
-        {
-            label: 'Попить кофе',
-            important: false,
-            id: 1
-        },
-        {
-            label: 'React приложение',
-            important: true,
-            id: 2,
-        },
-        {
-            label: 'Лечь спать',
-            important: false,
-            id: 3,
-        },
-        {
-            label: 'Сходить поесть',
-            important: true,
-            id: 4,
-        },
-
-
+       this.createTodoItem('Разобрать проблему'),
+        this.createTodoItem('React приложение'),
+        this.createTodoItem('Выпить кофе'),
+        this.createTodoItem('Сходить поесть'),
     ]
+};
+
+createTodoItem(label) {
+    return {
+            label,
+            important: false,
+            done: false,
+            id: this.maxId++ 
+    };
 };
 
 deleteItem = (id) => {
@@ -48,12 +39,7 @@ deleteItem = (id) => {
     })
 };
 addItem = (text) => {
-    const newItem = {
-        label: text,
-        important: false,
-        id: this.maxId++
-    };
-
+    const newItem = this.createTodoItem(text);
     this.setState(({todoItems}) => {
         const newArray = [...todoItems, newItem];
         return {
