@@ -62,6 +62,14 @@ addItem = (text) => {
     })
 };
 
+onToggleImportant = (id) => {
+    console.log(`toggle important`, id);
+};
+
+onToggleDone = (id) => {
+    console.log('toggle done', id);
+};
+
 render() {
     const {todoItems} = this.state;
     return (
@@ -72,7 +80,8 @@ render() {
             <ItemStatusFilter />
             </div>
 
-            <TodoList todos = {todoItems} onDeleted = {this.deleteItem} />
+            <TodoList todos = {todoItems} onDeleted = {this.deleteItem} onToggleImportant = {this.onToggleImportant}
+             onToggleDone = {this.onToggleDone} />
             <ItemAddForm onAdded = {this.addItem} />
         </div>
 
