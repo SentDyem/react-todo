@@ -49,22 +49,33 @@ addItem = (text) => {
 };
 
 onToggleImportant = (id) => {
-    console.log(`toggle important`, id);
+    this.setState(({todoItems}) => {
+        return {
+            todoItems: this.toggleProperty(todoItems, id, 'important')
+        }        
+    })
+
 };
 
 onToggleDone = (id) => {
     this.setState(( {todoItems} ) => {
 
-        const idx = todoItems.findIndex((el) => el.id === id);
-
-        const oldItem = todoItems[idx];
-        const newItem = { ...oldItem, done: !oldItem.done };
-        const newArray = [...todoItems.slice(0, idx), newItem, ...todoItems.slice(idx + 1)];
         return {
-            todoItems: newArray
+            todoItems: this.toggleProperty(todoItems, id, 'done')
         };
 
     }) 
+};
+
+toggleProperty(arr, id, propName) {
+
+        const idx = arr.findIndex((el) => el.id === id);
+
+        const oldItem = arr[idx];
+        const newItem = { ...oldItem, [propName]: !oldItem[propName] };
+
+        return [...arr.slice(0, idx), newItem, ...arr.slice(idx + 1)]
+        
 };
 
 render() {
