@@ -16,7 +16,8 @@ state = {
         this.createTodoItem('React приложение'),
         this.createTodoItem('Выпить кофе'),
         this.createTodoItem('Сходить поесть'),
-    ]
+    ],
+    term: '',
 };
 
 createTodoItem(text) {
@@ -78,19 +79,35 @@ toggleProperty(arr, id, propName) {
         
 };
 
+search(items, term) {
+    if (term.length === 0)
+    {
+        return items;
+    }
+    return items.filter((item) => {
+        return item.label.indexOf(term) > -1
+    })
+}
+
+onSearchChange = (term => {
+    this.setState({term});
+
+})
+
 render() {
     const doneCount = this.state.todoItems.filter((el) => el.done).length;
     const todoCount = this.state.todoItems.length - doneCount;
-    const { todoItems } = this.state;
+    const { todoItems, term } = this.state;
+    const visibleItems = this.search(todoItems, term)
     return (
         <div className = 'todo-app'>
             <AppHeader toDo = {todoCount} done = {doneCount}/>
             <div className = 'top-panel d-flex'>
-            <SearchPanel />
-            <ItemStatusFilter />
+            <SearchPanel onSearchChange = {this.onSearchChange} />
+            <ItemStatusFilter closeItems = {this.toCloseFilter} />
             </div>
 
-            <TodoList todos = {todoItems} onDeleted = {this.deleteItem} onToggleImportant = {this.onToggleImportant}
+            <TodoList todos = {visibleItems} onDeleted = {this.deleteItem} onToggleImportant = {this.onToggleImportant}
              onToggleDone = {this.onToggleDone} />
             <ItemAddForm onAdded = {this.addItem} />
         </div>
